@@ -26,8 +26,14 @@
       </div>
       <div class="form-group">
           <label for="grade">Grade:</label>
-        <input type="text" id="grade" name="grade" />
-      </div>
+          <select name="grade" id="grade">
+              <option value="-3">-3 Contributed nothing</option>
+              <option value="-2">-2 Contributed a lot less than others</option>
+              <option value="-1">-1 Contributed a little less than other</option>
+              <option value="0">0 Contributed equally</option>
+              <option value="1">+1 Contributed a lot more than others</option>
+        </select>
+        </div>
       <div class="form-group">
           <button type="submit">Save evaluation</button>
       </div>
