@@ -13,6 +13,26 @@
       Hello, <b>{{user}}</b> - <a href="{{logout_url}}">Logout</a>
     </p>
 
+    {% if eval_peer %}
+      <p><font color="green">Evaluation recieved for: {{eval_peer}}</font></p>
+    {% endif %}
+
+
+    <h4>Add a new evaluation for iteration 0</h4>
+    <form action="" method="post">
+      <div class="form-group">
+        <label for="peer">Peer:</label>
+        <input type="text" id="peer" name="peer" />
+      </div>
+      <div class="form-group">
+          <label for="grade">Grade:</label>
+        <input type="text" id="grade" name="grade" />
+      </div>
+      <div class="form-group">
+          <button type="submit">Save evaluation</button>
+      </div>
+    </form>
+
   </div>
 </body>
 </html>
