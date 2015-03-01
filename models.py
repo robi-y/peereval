@@ -1,10 +1,10 @@
 from google.appengine.ext import ndb
 
 class Evaluation(ndb.Model):
-    username = ndb.StringProperty()
-    groupname = ndb.StringProperty()
-    peer = ndb.StringProperty()
-    grade = ndb.IntegerProperty()
+    username = ndb.StringProperty(required=True)
+    groupname = ndb.StringProperty(required=True)
+    peer = ndb.StringProperty(required=True)
+    grade = ndb.IntegerProperty(required=True)
     justification = ndb.TextProperty(required=True)
     date_created = ndb.DateTimeProperty(auto_now_add=True)
 
