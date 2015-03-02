@@ -11,9 +11,8 @@ class Evaluation(ndb.Model):
 
     @classmethod
     def qry_evaluated_peers(cls, username, iteration):
-        #qry = cls.query(username=username, iteration=iteration).order(
-        #    -cls.date_created)
-        return ['student2','student4'] #qry
+        qry = cls.query().filter(ndb.AND(cls.username==username, cls.iteration==iteration)).order(-cls.date_created)
+        return qry #['student2','student4']
 
 class User(ndb.Model):
     username = ndb.StringProperty()
@@ -21,7 +20,9 @@ class User(ndb.Model):
     
     @classmethod
     def qry_peers(cls, user):
-        return ['student1', 'student2', 'student3', 'student4']
+        usergroup = 'group1'
+        peers = cls.query().filter(cls.groupname==usergroup)
+        return peers #['student1', 'student2', 'student3', 'student4']
 
 class Group(ndb.Model):
     groupname = ndb.StringProperty()

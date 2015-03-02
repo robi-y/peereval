@@ -56,7 +56,7 @@ class MainHandler(webapp2.RequestHandler):
             'user': user.nickname(),
             'logout_url': logout_url,
             'eval_peer': self.request.get('peer'),
-            'remaining_peers':  self.ramaining_peers(user, _iteration)
+            'remaining_peers':  self.ramaining_peers(user.email(), _iteration)
         }
         self._render_template(template_context)
     
@@ -67,7 +67,7 @@ class MainHandler(webapp2.RequestHandler):
         
     def ramaining_peers(self, user, iteration):
         peers = User.qry_peers(user) #.fetch()
-        evaluated = Evaluation.qry_evaluated_peers(user, iteration) #.fetch()
+        evaluated = [peer.groupname for peer in Evaluation.qry_evaluated_peers(user.email(), iteration).fetch()]
         return Utils.complements(peers, evaluated)
 
 app = webapp2.WSGIApplication([
