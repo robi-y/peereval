@@ -21,10 +21,9 @@ class MainHandler(webapp2.RequestHandler):
             template_context = {
                 'user': user.nickname(),
                 'logout_url': logout_url,
+                'remaining_peers': ["aa", "bb", "cc"] #qry_remaining_peers.fetch()
             }
-            template = jinja_env.get_template('main.html')
-            self.response.out.write(
-                template.render(template_context))
+            self._render_template(template_context)
         else:
             login_url = users.create_login_url(self.request.uri)
             self.redirect(login_url)
@@ -46,7 +45,7 @@ class MainHandler(webapp2.RequestHandler):
                          )
         evaluation.put()
 
-        qry_remaining_peers = Evaluation.remaining_evaluations_query(_username, _iteration)
+        #qry_remaining_peers = Evaluation.remaining_evaluations_query(_username, _iteration)
 
         logout_url = users.create_logout_url(self.request.uri)
 
@@ -56,9 +55,12 @@ class MainHandler(webapp2.RequestHandler):
             'eval_peer': self.request.get('peer'),
             'remaining_peers': ["aa", "bb", "cc"] #qry_remaining_peers.fetch()
         }
+        self._render_template(template_context)
+    
+    def _render_template(self, context):
         template = jinja_env.get_template('main.html')
         self.response.out.write(
-            template.render(template_context))
+            template.render(context))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
