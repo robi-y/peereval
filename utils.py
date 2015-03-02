@@ -2,7 +2,7 @@ class Utils:
 
     @classmethod
     def complements(cls, a, b):
-        return ['a']
+        return [item for item in a if item not in b]
 
 import unittest
 
