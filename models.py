@@ -10,16 +10,18 @@ class Evaluation(ndb.Model):
     date_created = ndb.DateTimeProperty(auto_now_add=True)
 
     @classmethod
-    def remaining_evaluations_query(cls, username, iteration):
-        peers = User.peers(username)
-
-        qry = cls.query(username=username, iteration=iteration).order(
-            -cls.date_created)
-        return qry
+    def qry_evaluated_peers(cls, username, iteration):
+        #qry = cls.query(username=username, iteration=iteration).order(
+        #    -cls.date_created)
+        return ['student2','student4'] #qry
 
 class User(ndb.Model):
     username = ndb.StringProperty()
     groupname = ndb.StringProperty()
+    
+    @classmethod
+    def qry_peers(cls, user):
+        return ['student1', 'student2', 'student3', 'student4']
 
 class Group(ndb.Model):
     groupname = ndb.StringProperty()

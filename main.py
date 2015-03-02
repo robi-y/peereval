@@ -10,18 +10,21 @@ import jinja2
 
 from models import Evaluation, User, Group
 
+from utils import Utils
+
 jinja_env = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        _iteration = 0 #query Group
         if user is not None:
             logout_url = users.create_logout_url(self.request.uri)
             template_context = {
                 'user': user.nickname(),
                 'logout_url': logout_url,
-                'remaining_peers': ["aa", "bb", "cc"] #qry_remaining_peers.fetch()
+                'remaining_peers': self.ramaining_peers(user, _iteration)
             }
             self._render_template(template_context)
         else:
@@ -53,7 +56,7 @@ class MainHandler(webapp2.RequestHandler):
             'user': user.nickname(),
             'logout_url': logout_url,
             'eval_peer': self.request.get('peer'),
-            'remaining_peers': ["aa", "bb", "cc"] #qry_remaining_peers.fetch()
+            'remaining_peers':  self.ramaining_peers(user, _iteration)
         }
         self._render_template(template_context)
     
@@ -61,6 +64,11 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_env.get_template('main.html')
         self.response.out.write(
             template.render(context))
+        
+    def ramaining_peers(self, user, iteration):
+        peers = User.qry_peers(user) #.fetch()
+        evaluated = Evaluation.qry_evaluated_peers(user, iteration) #.fetch()
+        return Utils.complements(peers, evaluated)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
