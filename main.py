@@ -52,12 +52,15 @@ class PeerEval(webapp2.RequestHandler):
         #qry_remaining_peers = Evaluation.remaining_evaluations_query(_username, _iteration)
 
         logout_url = users.create_logout_url(self.request.uri)
-
+        remaining =  self.ramaining_peers(_username, _iteration)
+        eval_peer = self.request.get('peer')
+        if eval_peer in remaining:
+            remaining.remove( eval_peer )
         template_context = {
             'user': user.nickname(),
             'logout_url': logout_url,
-            'eval_peer': self.request.get('peer'),
-            'remaining_peers':  self.ramaining_peers(_username, _iteration)
+            'eval_peer': eval_peer,
+            'remaining_peers': remaining
         }
         self._render_template(template_context)
     

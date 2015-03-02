@@ -11,7 +11,7 @@ class Evaluation(ndb.Model):
 
     @classmethod
     def qry_evaluated_peers(cls, username, iteration):
-        qry = cls.query().filter(ndb.AND(cls.username==username, cls.iteration==iteration)).order(-cls.date_created)
+        qry = cls.query().filter(ndb.AND(cls.username==username, cls.iteration==iteration)).order(cls.peer)
         return qry #['student2','student4']
 
 class User(ndb.Model):

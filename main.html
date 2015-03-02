@@ -17,6 +17,9 @@
       <p><font color="green">Evaluation recieved for: {{eval_peer}}</font></p>
     {% endif %}
 
+    {% if remaining_peers.__len__() == 0 %}
+      <p><font color="green">Evaluation ended for this iteration, thank you and good luck</font></p>
+    {% else %}
 
     <h4>Add a new evaluation for iteration 0</h4>
     <form action="" method="post">
@@ -47,6 +50,7 @@
           <button type="submit">Save evaluation</button>
       </div>
     </form>
+    {% endif %}
 
   </div>
 </body>
